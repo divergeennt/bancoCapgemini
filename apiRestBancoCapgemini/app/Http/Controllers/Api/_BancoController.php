@@ -15,9 +15,9 @@ class BancoController extends Controller
      */
     public function index()
     {
-        $Banco = Banco::all();
+        $banco = Banco::all();
         
-        return $Banco;
+        return $banco;
     }
 
     public function status() {
@@ -34,9 +34,9 @@ class BancoController extends Controller
     {
         //
         try {
-            $Banco = new Banco();
-            $Banco->nome = $request->nome;
-            $Banco->save();
+            $banco = new Banco();
+            $banco->nome = $request->nome;
+            $banco->save();
             $retorno =  ["aviso"=>"Banco Cadastrado com Sucesso!"];
         } catch (\Throwable $th) {
             //throw $th;
@@ -53,13 +53,13 @@ class BancoController extends Controller
      */
     public function show($id)
     {
-        $Banco = Banco::find($id);
+        $banco = Banco::find($id);
 
-        if (empty($Banco)) {
+        if (empty($banco)) {
             $retorno =  ["erro"=>"Banco não encontrado"];
             return json_encode($retorno);
         }else{
-            return $Banco;
+            return $banco;
         }
     }
 
@@ -73,17 +73,17 @@ class BancoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $Banco = Banco::find($id);
+        $banco = Banco::find($id);
 
-        if (empty($Banco)) {
+        if (empty($banco)) {
             $retorno =  ["erro"=>"Banco não encontrado"];
             return json_encode($retorno);
         }
 
         try {
-            $Banco = Banco::find($id);
-            $Banco->nome = $request->nome;
-            $Banco->save();
+            $banco = Banco::find($id);
+            $banco->nome = $request->nome;
+            $banco->save();
             
             $retorno =  ["aviso"=>"Banco Atualizado com Sucesso!"];
         } catch (\Throwable $th) {
@@ -101,16 +101,16 @@ class BancoController extends Controller
      */
     public function destroy($id)
     {
-        $Banco = Banco::find($id);
+        $banco = Banco::find($id);
 
-        if (empty($Banco)) {
+        if (empty($banco)) {
             $retorno =  ["erro"=>"Banco não encontrado"];
             return json_encode($retorno);
         }
 
         try {
-            $Banco = Banco::find($id);
-            $Banco->delete();
+            $banco = Banco::find($id);
+            $banco->delete();
             
             $retorno =  ["aviso"=>"Banco Excluído com Sucesso!"];
         } catch (\Throwable $th) {

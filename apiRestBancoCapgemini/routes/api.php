@@ -18,9 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::namespace('api')->group( function(){
-    Route::get('/banco/status', 'BancoController@status');
-    Route::get('/banco/index', 'BancoController@index');
+Route::namespace('Api')->group( function(){
+    Route::get('/banco/status', 'bancoController@status');
+    Route::post('/banco/cadastro', 'bancoController@cadastrarBanco');
     Route::get('/banco/show/{id}', 'BancoController@show');
     Route::post('/banco/store', 'BancoController@store');
     Route::put('/banco/update/{id}', 'BancoController@update');
@@ -33,12 +33,12 @@ Route::namespace('api')->group( function(){
     Route::put('/cliente/update/{id}', 'ClienteController@update');
     Route::delete('/cliente/delete/{id}', 'ClienteController@destroy');
 
-    Route::get('/contacorrente/status', 'ContaCorrenteController@status');
-    Route::get('/contacorrente/index', 'ContaCorrenteController@index');
-    Route::get('/contacorrente/show/{id}', 'ContaCorrenteController@show');
-    Route::post('/contacorrente/store', 'ContaCorrenteController@store');
-    Route::put('/contacorrente/update/{id}', 'ContaCorrenteController@update');
-    Route::delete('/contacorrente/delete/{id}', 'ContaCorrenteController@destroy');
+    Route::get('/contaCorrente/valorContaCorrente/{id?}/{id2?}', 'contaCorrenteController@valorConta');
+    Route::get('/contacorrente/index', 'contaCorrenteController@index');
+    Route::get('/contacorrente/show/{id}', 'contaCorrenteController@show');
+    Route::post('/contacorrente/store', 'contaCorrenteController@store');
+    Route::put('/contacorrente/update/{id}', 'contaCorrenteController@update');
+    Route::delete('/contacorrente/delete/{id}', 'contaCorrenteController@destroy');
 
     Route::get('/transacao/status', 'TransacoesController@status');
     Route::get('/transacao/index', 'TransacoesController@index');

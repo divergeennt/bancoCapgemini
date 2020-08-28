@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
-class CreateTransacoes extends Migration
+class CreateContaCorrentesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateTransacoes extends Migration
      */
     public function up()
     {
-        Schema::create('transacoes', function (Blueprint $table) {
+        Schema::create('conta_correntes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('banco_id');
             $table->integer('cliente_id');
-            $table->integer('conta_corrente_id');
-            $table->date('data');
-            $table->double('valor', 10.2);
-            $table->string('tipo', 1);
+            $table->string('agencia', 20);
+            $table->string('conta', 20);
+            $table->double('saldo', 10.2);
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateTransacoes extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transacoes');
+        Schema::dropIfExists('conta_correntes');
     }
 }
