@@ -20,73 +20,76 @@ class contaCorrenteController extends Controller
     }
 
 
-    public function valorConta($idCliente = 0, $id2 = 0)
+
+
+
+    public function dadosContaCorrente($codigoCliente = 0, $codigoConta = 0)
     {
-        // return ['status' => 'ok'];
-        $banco = contaCorrente::where('cliente_id', '=', $idCliente)
-            ->where('banco_id', '=', $id2)
-            ->select('saldo', 'agencia')
+
+        $dadosContaCorrente = contaCorrente::select('conta_correntes.*', 'clientes.*', 'bancos.nome', 'clientes.nome as nomeCliente')
+            ->Join('clientes', 'clientes.id', '=', 'conta_correntes.cliente_id')
+            ->Join('bancos', 'bancos.id', '=', 'conta_correntes.id')
+            ->where('conta_correntes.id', '=', $codigoConta)
+            ->where('clientes.id', '=', $codigoCliente)
             ->get();
-        // if(count($banco) > 0 ){
-        //     foreach ($banco as $value) {
-        //         $a = $value->
-        //     }
-        // }
-        if (empty($banco)) {
-            $retorno =  ["erro" => "Banco não encontrado"];
+
+        foreach ($dadosContaCorrente as $value) {
+            $retorno['saldoFormatado'] = number_format($value['saldo'], 2, ',', '.');
+        }
+
+        if (empty($dadosContaCorrente)) {
+            $retorno =  ["erro" => "Conta Corrente não encontrada"];
             return json_encode($retorno);
         } else {
-            return $banco;
+            $retorno['dadosConta'] = $dadosContaCorrente;
+            return json_encode($retorno);
         }
     }
 
-    public function store(Request $request)
+    public function saldoConta($codigoContaCorrente, $codigoBanco, $conta)
     {
-        //
+
+        $rsSaldo = contaCorrente::select('conta_correntes.saldo')
+            ->where('id', '=', $codigoContaCorrente)
+            ->where('banco_id', '=', $codigoBanco)
+            ->where('conta', '=', $conta)
+            ->get();
+
+        if (empty($rsSaldo)) {
+            $retorno =  ["erro" => "Conta Corrente não encontrado"];
+            return json_encode($retorno);
+        } else {
+            foreach ($rsSaldo as $value) {
+                $valorSaldo = $value['saldo'];
+            }
+            $retorno['saldo'] = number_format($valorSaldo, 2, ',', '.');
+            return json_encode($retorno);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+
+
+
+    public function cadastrarContaCorrente(Request $request)
     {
-        //
+        // dd($request);
+        try {
+            $contaCorrente = new contaCorrente();
+            $contaCorrente->banco_id = $request->codigoBanco;
+            $contaCorrente->cliente_id = $request->codigoCliente;
+            $contaCorrente->agencia = $request->agencia;
+            $contaCorrente->conta = $request->conta;
+            $contaCorrente->saldo = $request->saldo;
+            $contaCorrente->save();
+            $retorno =  ["aviso" => "Conta Corrente Cadastrada com Sucesso!"];
+        } catch (\Throwable $th) {
+            $retorno =  ["erro" => "Conta Corrente não cadastrada.", 'details' => $th];
+        }
+        return json_encode($retorno);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+    // public function atualizarContaCorrente(){
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+    // }
 }

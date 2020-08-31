@@ -19,7 +19,7 @@ class CreateContaCorrentesTable extends Migration
             $table->integer('cliente_id');
             $table->string('agencia', 20);
             $table->string('conta', 20);
-            $table->double('saldo', 10.2);
+            $table->double('saldo', 10,2);
             $table->timestamps();
         });
     }

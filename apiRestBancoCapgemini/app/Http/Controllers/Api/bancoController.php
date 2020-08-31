@@ -9,18 +9,14 @@ use App\banco;
 class bancoController extends Controller
 {
    
-    public function index()
+    public function selectAll()
     {
         $banco = banco::all();        
         return $banco;
     }
 
     
-    public function create()
-    {
-        //
-    }
-
+  
  
     public function cadastrarBanco(Request $request)
     {
@@ -50,8 +46,7 @@ class bancoController extends Controller
     }
 
  
-
-
+    
     public function atualizarBanco(Request $request, $id)
     {
         $banco = banco::find($id);
