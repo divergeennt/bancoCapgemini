@@ -19,7 +19,7 @@ class CreateTransacoesTable extends Migration
             $table->integer('cliente_id');
             $table->integer('conta_corrente_id');
             $table->date('data');
-            $table->double('valor', 10.2);
+            $table->double('valor', 10,2);
             $table->string('tipo', 1);
             $table->timestamps();
         });
