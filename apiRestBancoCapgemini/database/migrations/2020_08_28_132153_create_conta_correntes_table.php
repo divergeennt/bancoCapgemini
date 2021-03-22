@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateContaCorrentesTable extends Migration
+class CreateContaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateContaCorrentesTable extends Migration
      */
     public function up()
     {
-        Schema::create('conta_correntes', function (Blueprint $table) {
+        Schema::create('conta_corrente', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('banco_id');
             $table->integer('cliente_id');
@@ -21,6 +21,7 @@ class CreateContaCorrentesTable extends Migration
             $table->string('conta', 20);
             $table->double('saldo', 10,2);
             $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
         });
     }
 
@@ -31,6 +32,6 @@ class CreateContaCorrentesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('conta_correntes');
+        Schema::dropIfExists('conta_corrente');
     }
 }

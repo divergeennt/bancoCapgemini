@@ -22,6 +22,7 @@ class CreateTransacoesTable extends Migration
             $table->double('valor', 10,2);
             $table->string('tipo', 1);
             $table->timestamps();
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

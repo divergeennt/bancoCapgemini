@@ -336,7 +336,7 @@ export default {
     getSaldo() {
       this.$http
         .get(
-          "/contaCorrente/saldo/" +
+          "/conta/saldo/" +
             this.codigoContaCorrente +
             "/" +
             this.codigoBanco +
@@ -344,21 +344,16 @@ export default {
             this.conta
         )
         .then(retorno => {
-          // console.log(retorno.data.saldo);
-          // var data =  retorno.data[0];
           this.saldoConta = retorno.data.saldo;
-
-          // this.saldoConta = retorno.data.saldo;
         })
         .catch(error => {
           console.log("Resposta indevida de requisição");
-          // console.log(error);
         });
     },
     getDadosConta() {
       this.$http
         .get(
-          "contaCorrente/dadosConta/" +
+          "/conta/data/" +
             this.codigoCliente +
             "/" +
             this.codigoConta
@@ -380,7 +375,7 @@ export default {
     getHistoricoTransacao() {
       this.$http
         .get(
-          "/transacao/historico/" +
+          "/transacao/show/" +
             this.codigoContaCorrente +
             "/" +
             this.codigoBanco +
@@ -407,7 +402,6 @@ export default {
 
   mounted() {
     this.getDadosConta();
-    // this.getSaldo();
   }
 };
 </script>

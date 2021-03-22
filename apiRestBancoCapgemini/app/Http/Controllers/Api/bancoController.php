@@ -4,90 +4,38 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\banco;
+use App\Services\BancoService;
 
-class bancoController extends Controller
+class BancoController extends Controller
 {
-   
-    public function selectAll()
+
+    public function __construct(BancoService $bancoService)
     {
-        $banco = banco::all();        
-        return $banco;
+        $this->BancoService = $bancoService;
     }
 
-    
-  
- 
-    public function cadastrarBanco(Request $request)
+    public function index()
     {
-        // dd('aqui');
-        try {
-            $banco = new banco();
-            $banco->nome = $request->nome;
-            $banco->save();
-            $retorno =  ["aviso"=>"Banco Cadastrado com Sucesso!"];
-        } catch (\Throwable $th) {            
-            $retorno =  ["erro"=>"Banco não cadastrado.", 'details'=>$th];
-        }
-        return json_encode($retorno);
+        return $this->BancoService->findAll();
     }
 
-    
-    public function buscarBanco($id)
+    public function show($id)
     {
-        $banco = banco::find($id);
-
-        if (empty($banco)) {
-            $retorno =  ["erro"=>"Banco não encontrado"];
-            return json_encode($retorno);
-        }else{
-            return $banco;
-        }
+        return $this->BancoService->findBanco($id);
     }
 
- 
-    
-    public function atualizarBanco(Request $request, $id)
+    public function store(Request $request)
     {
-        $banco = banco::find($id);
-
-        if (empty($banco)) {
-            $retorno =  ["erro"=>"Banco não encontrado"];
-            return json_encode($retorno);
-        }
-
-        try {
-            $banco = banco::find($id);
-            $banco->nome = $request->nome;
-            $banco->save();
-            
-            $retorno =  ["aviso"=>"Banco Atualizado com Sucesso!"];
-        } catch (\Throwable $th) {
-            //throw $th;
-            $retorno =  ["erro"=>"Banco não Atualizado.", 'details'=>$th];
-        }
-        return json_encode($retorno);
+        return $this->BancoService->storeBanco($request);
     }
 
-    
-    public function deletarBanco($id)
+    public function update(Request $request)
     {
-        $banco = banco::find($id);
+        return $this->BancoService->updateBanco($request);
+    }
 
-        if (empty($banco)) {
-            $retorno =  ["erro"=>"Banco não encontrado"];
-            return json_encode($retorno);
-        }
-
-        try {
-            $banco = banco::find($id);
-            $banco->delete();
-            
-            $retorno =  ["aviso"=>"Banco Excluído com Sucesso!"];
-        } catch (\Throwable $th) {
-            //throw $th;
-            $retorno =  ["erro"=>"Banco não Excluído.", 'details'=>$th];
-        }
-        return json_encode($retorno);
+    public function destroy($id)
+    {
+        return $this->BancoService->deleteBanco($id);
     }
 }

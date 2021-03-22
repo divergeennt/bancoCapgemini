@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateBancosTable extends Migration
+class CreateBancoTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,7 @@ class CreateBancosTable extends Migration
      */
     public function up()
     {
-        Schema::create('bancos', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('nome', 200);
-            $table->timestamps();
-            $table->softDeletes('deleted_at', 0);
-        });
+        //
     }
 
     /**
@@ -28,6 +23,6 @@ class CreateBancosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bancos');
+        //
     }
 }

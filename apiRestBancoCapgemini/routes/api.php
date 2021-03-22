@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,34 +22,33 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::namespace('api')->group(function () {
 
     //BANCO
-    Route::get('/banco/todos', 'bancoController@selectAll');
-    Route::post('/banco/cadastrar', 'bancoController@cadastrarBanco');
-    Route::get('/banco/buscar/{id}', 'bancoController@buscarBanco');
-    Route::put('/banco/atualizar/{id}', 'bancoController@atualizarBanco');
-    Route::delete('/banco/deletar/{id}', 'bancoController@deletarBanco');
-    
-  
-    
-    
+    Route::get('/banco/index', 'BancoController@index');
+    Route::get('/banco/show/{id}', 'BancoController@show');
+    Route::post('/banco/store', 'BancoController@store');
+    Route::put('/banco/update/{id}', 'BancoController@update');
+    Route::delete('/banco/delete/{id}', 'BancoController@destroy');
+
+
+
+
     //CLIENTE
-    Route::get('/cliente/todos/', 'clienteController@selectAll');
-    Route::get('/cliente/buscar/{id}', 'clienteController@buscarCliente');
-    Route::post('/cliente/cadastrar', 'clienteController@cadastrarCliente');
-    Route::put('/cliente/update/{id}', 'clienteController@atualizarCliente');
-    Route::delete('/cliente/delete/{id}', 'clienteController@deletarCliente');
+    Route::get('/cliente/index/', 'ClienteController@index');
+    Route::get('/cliente/show/{id}', 'ClienteController@show');
+    Route::post('/cliente/store', 'ClienteController@store');
+    Route::put('/cliente/update/{id}', 'ClienteController@update');
+    Route::delete('/cliente/delete/{id}', 'ClienteController@destroy');
 
 
     //CONTA CORRENTE
-    Route::get('/contaCorrente/saldo/{codigoContaCorrente?}/{codigoBanco?}/{conta?}', 'contaCorrenteController@saldoConta');
-    Route::get('/contaCorrente/dadosConta/{id?}/{id2?}', 'contaCorrenteController@dadosContaCorrente');
-    Route::post('/contacorrente/cadastrar', 'contaCorrenteController@cadastrarContaCorrente');
+    Route::get('/conta/index/', 'ContaController@index');
+    Route::get('/conta/show/{id}', 'ContaController@show');
+    Route::post('/conta/store', 'ContaController@store');
+    Route::get('/conta/data/{idCliente?}/{idConta?}', 'ContaController@data');
+    Route::get('/conta/saldo/{codigoContaCorrente?}/{codigoBanco?}/{conta?}', 'ContaController@saldo');
 
 
     // TRANSAÇÕES
-    Route::post('/transacao/saque/', 'transacoesController@sacar');
-    Route::post('/transacao/deposito/', 'transacoesController@depositar');
-
-
-    Route::get('/transacao/historico/{codigoContaCorrente?}/{codigoBanco?}/{codigoCliente?}', 'transacoesController@historicoTransacoes');
-    
+    Route::post('/transacao/deposito/', 'TransacoesController@storeDepositar');
+    Route::post('/transacao/saque/', 'TransacoesController@storeSacar');
+    Route::get('/transacao/show/{codigoContaCorrente?}/{codigoBanco?}/{codigoCliente?}', 'TransacoesController@show');
 });

@@ -13,6 +13,7 @@
     "flatpickr": "^4.5.1",
     "nouislider": "^11.1.0",
     "register-service-worker": "^1.5.2",
+    "v-money": "^0.8.1",
     "vue": "^2.6.6",
     "vue-axios": "^2.1.5",
     "vue-flatpickr-component": "^8.1.1",

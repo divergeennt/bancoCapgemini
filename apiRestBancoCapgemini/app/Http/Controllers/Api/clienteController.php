@@ -4,94 +4,27 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\cliente;
+use App\Services\ClienteService;
 
-class clienteController extends Controller
+class ClienteController extends Controller
 {
-
-
-    public function selectAll()
+    public function __construct(ClienteService $clienteService)
     {
-        $cliente = cliente::all();        
-        return $cliente;
+        $this->ClienteService = $clienteService;
     }
 
-
-    public function cadastrarCliente(Request $request)
+    public function index()
     {
-    // dd($request);
-        try {
-            $cliente = new cliente();
-            $cliente->nome = $request->nome;
-            $cliente->cpf = $request->cpf;
-            $cliente->email = $request->email;
-            $cliente->telefone = $request->telefone;
-           
-            $cliente->save();
-            $retorno =  ["aviso"=>"Cliente Cadastrado com Sucesso!"];
-        } catch (\Throwable $th) {            
-            $retorno =  ["erro"=>"Cliente não cadastrado.", 'details'=>$th];
-        }
-        return json_encode($retorno);
+        return $this->ClienteService->findAll();
     }
 
-     public function buscarCliente($id)
+    public function show($id)
     {
-        $cliente = cliente::find($id);
-
-        if (empty($cliente)) {
-            $retorno =  ["erro"=>"Cliente não encontrado"];
-            return json_encode($retorno);
-        }else{
-            return $cliente;
-        }
+        return $this->ClienteService->findCliente($id);
     }
 
-    
-    public function atualizarCliente(Request $request, $id)
+    public function store(Request $request)
     {
-        $cliente = cliente::find($id);
-
-        if (empty($cliente)) {
-            $retorno =  ["erro"=>"Cliente não encontrado"];
-            return json_encode($retorno);
-        }
-
-        try {
-            $cliente = cliente::find($id);
-            $cliente->nome = $request->nome;
-            $cliente->cpf = $request->cpf;
-            $cliente->email = $request->email;
-            $cliente->telefone = $request->telefone;
-            $cliente->save();
-            
-            $retorno =  ["aviso"=>"Cliente Atualizado com Sucesso!"];
-        } catch (\Throwable $th) {
-            //throw $th;
-            $retorno =  ["erro"=>"Cliente não Atualizado.", 'details'=>$th];
-        }
-        return json_encode($retorno);
-    }
-
-    
-    public function deletarCliente($id)
-    {
-        $cliente = cliente::find($id);
-
-        if (empty($cliente)) {
-            $retorno =  ["erro"=>"Cliente não encontrado"];
-            return json_encode($retorno);
-        }
-
-        try {
-            $cliente = cliente::find($id);
-            $cliente->delete();
-            
-            $retorno =  ["aviso"=>"Cliente Excluído com Sucesso!"];
-        } catch (\Throwable $th) {
-            //throw $th;
-            $retorno =  ["erro"=>"Cliente não Excluído.", 'details'=>$th];
-        }
-        return json_encode($retorno);
+        return $this->ClienteService->storeCliente($request);
     }
 }
