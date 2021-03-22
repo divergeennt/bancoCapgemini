@@ -26,7 +26,6 @@ class ClienteRepository
         return $cliente;
     }
 
-
     public  function store(Request $request)
     {
         try {

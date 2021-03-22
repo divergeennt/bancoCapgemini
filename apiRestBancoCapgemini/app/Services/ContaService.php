@@ -24,14 +24,17 @@ class ContaService
     {
         return $this->ContaRepository->show($id);
     }
+
     public function storeConta(Request $request)
     {
         return $this->ContaRepository->store($request);
     }
+    
     public function dadosConta($idCliente, $idConta)
     {
         return $this->ContaRepository->data($idCliente, $idConta);
     }
+
     public function saldoConta($codigoContaCorrente, $codigoBanco, $conta)
     {
         return $this->ContaRepository->saldo($codigoContaCorrente, $codigoBanco, $conta);

@@ -24,6 +24,7 @@ class BancoService
     {
         return $this->BancoRepository->show($id);
     }
+    
     public function storeBanco(Request $request)
     {
         return $this->BancoRepository->store($request);
@@ -33,6 +34,7 @@ class BancoService
     {
         return $this->BancoRepository->update($request);
     }
+
     public function deleteBanco($id)
     {
         return $this->BancoRepository->delete($id);

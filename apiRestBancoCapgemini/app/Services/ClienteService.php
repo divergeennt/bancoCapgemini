@@ -24,6 +24,7 @@ class ClienteService
     {
         return $this->ClienteRepository->show($id);
     }
+    
     public function storeCliente(Request $request)
     {
         return $this->ClienteRepository->store($request);
